@@ -6,7 +6,7 @@
     <style>
         body { margin:0; background:#000; color:#fff; font-family:sans-serif; overflow:hidden; }
         canvas { display:block; margin:0 auto; background:#000; }
-        #info { position:absolute; top:10px; left:10px; }
+        #info { position:absolute; top:10px; left:10px; z-index:1; }
     </style>
 </head>
 <body>
@@ -157,7 +157,7 @@ function draw(){
   ctx.textBaseline = 'middle';
 
   const now = Date.now();
-  const d = (now - J2000)/86400000 * 100000; // speed x100000
+  const d = (now - J2000)/86400000 * 1000; // speed x1000
   const simDate = new Date(J2000 + d*86400000);
   info.textContent = simDate.toUTCString();
   planets.forEach(p=>{
