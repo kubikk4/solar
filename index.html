@@ -113,6 +113,7 @@ const planets = [
 ];
 
 const J2000 = Date.UTC(2000,0,1,12); // Jan 1 2000 12:00 UT
+const startTime = Date.now(); // when simulation started
 
 function kepler(M, e){
   let E = M;
@@ -157,13 +158,12 @@ function draw(){
   ctx.textBaseline = 'middle';
 
   const now = Date.now();
+  const elapsed = now - startTime; // real time elapsed
   const speed = 172800; // simulation speed: 2 days per real second
-  const d = (now - J2000)/86400000 * speed;
-  const simTime = J2000 + d*86400000;
+  const d = elapsed / 86400000 * speed; // simulation days since J2000
+  const simTime = J2000 + d * 86400000;
   const simDate = new Date(simTime);
-  info.textContent = isNaN(simDate.getTime())
-    ? 'Date out of range'
-    : simDate.toISOString().slice(0,10);
+  info.textContent = simDate.toISOString().slice(0, 10);
   planets.forEach(p=>{
     const pos = position(p,d);
     const r = Math.sqrt(pos.x*pos.x + pos.y*pos.y);
