@@ -157,9 +157,13 @@ function draw(){
   ctx.textBaseline = 'middle';
 
   const now = Date.now();
-  const d = (now - J2000)/86400000 * 100000; // speed x100000
-  const simDate = new Date(J2000 + d*86400000);
-  info.textContent = simDate.toUTCString();
+  const speed = 100; // simulation speed multiplier
+  const d = (now - J2000)/86400000 * speed;
+  const simTime = J2000 + d*86400000;
+  const simDate = new Date(simTime);
+  info.textContent = isNaN(simDate.getTime())
+    ? 'Date out of range'
+    : simDate.toUTCString();
   planets.forEach(p=>{
     const pos = position(p,d);
     const r = Math.sqrt(pos.x*pos.x + pos.y*pos.y);
