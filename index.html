@@ -10,10 +10,12 @@
     </style>
 </head>
 <body>
+<div id="info"></div>
 <canvas id="solar" width="800" height="800"></canvas>
 <script>
 const canvas = document.getElementById('solar');
 const ctx = canvas.getContext('2d');
+const info = document.getElementById('info');
 const centerX = canvas.width / 2;
 const centerY = canvas.height / 2;
 
@@ -155,7 +157,9 @@ function draw(){
   ctx.textBaseline = 'middle';
 
   const now = Date.now();
-  const d = (now - J2000)/86400000 * 1000; // speed x1000
+  const d = (now - J2000)/86400000 * 100000; // speed x100000
+  const simDate = new Date(J2000 + d*86400000);
+  info.textContent = simDate.toUTCString();
   planets.forEach(p=>{
     const pos = position(p,d);
     const r = Math.sqrt(pos.x*pos.x + pos.y*pos.y);
